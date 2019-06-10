@@ -1,0 +1,30 @@
+
+  #div1 {
+    height: 50px;
+    width: 250px;
+    border: 1px solid black;
+  }
+
+  #image-container {
+    z-index: 1;
+    background-color: red;
+  }
+
+  img {
+    z-index: 1000;
+  }
+
+  #LO-para {
+    color: red;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  #carousel {
+    display: none;
+  }
+  .carouselImage {
+    height: 150px;
+    width: auto;
+    margin: 15px;
+  }
