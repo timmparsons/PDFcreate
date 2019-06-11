@@ -15,14 +15,14 @@
     <h1>PDF Converter</h1>
     <div class="listsContainer">
       <div class="imageListContainer container">
-        <select name="images" id="imageList" onchange="changeImage(this)" >
-            <option>Pick an image:</option>
+        <select name="images" id="imageList" class="selector" onchange="changeImage(this)" >
+            <option value="0" class="novalue">Pick an image:</option>
           </select>
       </div>      
   
       <div class="LOListContainer container">
         <select name="loanOfficers" id="LOList" class="selector">
-            <option value="0" class="novalue">Pick a Loan Officer:</option>
+          <option value="0" class="novalue">Pick a Loan Officer:</option>
           <option value="1" class="option1">Loan Officer 1</option>
           <option value="2" class="option2">Loan Officer 2</option>
           <option value="3" class="option3">Loan Officer 3</option>
@@ -31,7 +31,7 @@
 
       <div class="RealtorListContainer container">
           <select name="realtors" id="realtorList" class="selector">
-              <option value="0" class="novalue">Pick a Realtor:</option>
+            <option value="0" class="novalue">Pick a Realtor:</option>
             <option value="1" class="option1">Realtor</option>
             <option value="2" class="option2">Realtor 2</option>
             <option value="3" class="option3">Realtor 3</option>
@@ -44,7 +44,7 @@
       <div class="pdf-button-container container">
         <button onclick="generatePDF()">Click for PDF</button>   
       </div>
-      <div id="image-containerSection">
+      <div id="image-containerSection" onclick="showCoords(event)">
         <img id="image-container"></img>
       </div>
     </div>

@@ -1,11 +1,28 @@
-var imageList = [];
+//LIST OF VARIABLES
+
+
+let imageList = [];
 let url = "https://pdfcreate.blob.core.windows.net/%24web/Images/"
     let images = [
       {'name': 'Benefits', image: `Images/Benefits_of_Homeownership.jpg`},
-      {'name': 'Difference', image: `Images/The_Difference_Your_Rate_Makes.jpg`}
-    ]
+      {'name': 'Difference', image: `Images/The_Difference_Your_Rate_Makes.jpg`}]
   let imageName = ''
-    console.log(images)
+  const imageContainer = document.getElementById('image-containerSection');
+
+  console.log(images)
+// --------------------------------
+//   async function fetchAsync() {
+//   let response = await fetch("https://marketingflyers.blob.core.windows.net/flyers/?restype=container&comp=list")
+//   let image = await response.text().then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+//   var blobList = Array.from(image.querySelectorAll('Blob'))
+//     blobList.forEach((blob) => {
+//       let name = blob.childNodes[0].textContent
+//       let url = blob.childNodes[1].textContent
+//       imageList.push({"name": name, "url": url}) //push images to array imageList
+//     })
+//   console.log(imageList)
+// }
+// fetchAsync()
 
 function addDropdown() { //Image filename dropdown
     let imageListContainer = document.getElementById('imageList') //Get ID to add select dropdown
@@ -17,80 +34,92 @@ function addDropdown() { //Image filename dropdown
 }
 addDropdown()
 
-function loadImages() {
-  console.log("changed")
-  let carousel = document.getElementById('carousel')
-  //add images to carousel
-  imageList.map(images => {
-    let carouselImage = document.createElement('img')
-    carouselImage.setAttribute('src', images.url)
-    carouselImage.setAttribute('class', `carouselImage ${images.name}`)
-    carousel.append(carouselImage)
-  })
-return imageList  
-}
+// function loadImages() {
+//   console.log("changed")
+//   let carousel = document.getElementById('carousel')
+//   //add images to carousel
+//   imageList.map(images => {
+//     let carouselImage = document.createElement('img')
+//     carouselImage.setAttribute('src', images.url)
+//     carouselImage.setAttribute('class', `carouselImage ${images.name}`)
+//     carousel.append(carouselImage)
+//   })
+// return imageList  
+// }
 // loadImages()
 
 //change the image in the dropdown 
 function changeImage(val) {
   let value = val.options[val.selectedIndex].value;
   let imageSrc = images[value].image;
+  // let imageSrc = imageList[value].url
   let image = document.getElementById('image-container');
   image.src = `${imageSrc}`
   image.setAttribute('height', '100%')
   image.setAttribute('width', '100%')
   imageName = images[value].name;
 }
-
-  
+ 
   //Generate the PDF on click
-  async function generatePDF() {
-    const imageContainer = document.getElementById('image-containerSection');
+  function generatePDF() {
     html2canvas(imageContainer, {
       onrendered: function(canvas) {  
-        var img = canvas.toDataURL("image/jpeg", 1.0);
+        var img = canvas.toDataURL("image/jpg");
+        console.log(img)
+        // window.open(img)
         var doc = new jsPDF()
-        doc.addImage(img, 'JPEG',0 ,0, 210, 297); // Height and width of area when tabopens as PDF
+        doc.addImage(img, 'JPG',0 ,0, 210, 297); // Height and width of area when tabopens as PDF
         doc.save(`${imageName}.pdf`);
       }  
     });
   };
   
   
+  
+  //Some variables for this section //
+  let container = document.getElementById('image-containerSection')
+  let LODropdown = document.getElementById('LOList')
+  let LODropdownText = LODropdown.options[LODropdown.selectedIndex].text;
+  let imageDropdown = document.getElementById('imageList');
+  let imageDropdownText = imageDropdown.options[imageDropdown.selectedIndex].text;
+  let realtorDropdown = document.getElementById('realtorList');
+  let realtorDropdownText = realtorDropdown.options[realtorDropdown.selectedIndex].text;
+  let image = document.getElementById('image-container')
+
+  //----------
+
   //Add Loan Officer and realtor information to image by finding selected number in dropdown and add div to image-container
 
-  let LO = document.getElementById('LOList')
-  LO.addEventListener('change', createLOMessage)
+  LODropdown.addEventListener('change', createLOMessage)
 
   function createLOMessage() {
-    let elemText = LO.options[LO.selectedIndex].text;
-    let container = document.getElementById('image-containerSection')
     let message = document.createElement('div')
     message.classList.add('LOtext')
-    message.innerHTML = elemText;
-    container.append(message);
-    message.style = 'position:absolute; top: 1650px; left: 70px; font-size: 40px; color: red';
-    
+    message.innerHTML = LODropdownText;
+    container.append(message);    
+    message.style = `position:relative; top: 800px; left: 10%; font-size: 40px; color: red`;
+    console.log(image)   
   }
 
   //Add realtor information
-  let realtor = document.getElementById('realtorList')
-  realtor.addEventListener('change', createRealtorMessage)
+  realtorDropdown.addEventListener('change', createRealtorMessage);
 
   function createRealtorMessage() {
-    let elemText = realtor.options[realtor.selectedIndex].text;
-    let container = document.getElementById('image-containerSection')
     let message = document.createElement('div')
     message.classList.add('realtorText')
-    message.innerHTML = elemText;
+    message.innerHTML = realtorDropdownText;
     container.append(message);
     message.style = 'position:absolute; top: 1650px; left: 750px; font-size: 40px; color: red';
     
   }
 
-
-
-
+  function showCoords(event) {
+    var x = event.screenX;
+    var y = event.screenY;
+    var coords = "X coords: " + x + ", Y coords: " + y
+    console.log(coords)  
+    console.log(imageContainer.offsetHeight)
+}
 
 
 
