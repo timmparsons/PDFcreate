@@ -1,3 +1,5 @@
+# HTML to PDF converter
+
 This app uses Azure to store images, show them in the broswer, add information that can be found in the dropdowns and then converts the image to a PDF.
 
 Tech used:
